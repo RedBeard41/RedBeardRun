@@ -1,5 +1,6 @@
 package Screens;
 
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -38,9 +39,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     private Vector2 gravitationalForces;
     private float random;
 
-    private static final short GROUND = 2;
-    private static final short PLAYER = 4;
-    private static final short ENEMY = 8;
+
 
     //view
     private OrthographicCamera camera;
@@ -49,6 +48,9 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
     //Controls
     private GameInput gameInput;
+
+    //Ashley
+    private PooledEngine engine;
 
 
 
@@ -64,6 +66,9 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         camera.position.set(gameViewport.getWorldWidth()/2,gameViewport.getWorldHeight()/2,0);
 
         gameInput = new GameInput(gameViewport);
+
+        engine = new PooledEngine(100, 500, 300,
+                1000);
 
 
         /*gravitationalForces = new Vector2(0,-9.8f);
