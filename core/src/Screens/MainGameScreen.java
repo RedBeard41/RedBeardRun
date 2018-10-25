@@ -16,9 +16,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.redbeard.RedBeardRun;
 
 import java.util.Random;
+
+import Helpers.Figures;
+import Helpers.GameInput;
 
 public class MainGameScreen implements Screen {
 public static final String TAG = MainGameScreen.class.getSimpleName();
@@ -39,7 +44,11 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
     //view
     private OrthographicCamera camera;
+    private Viewport gameViewport;
     private Box2DDebugRenderer b2dr;
+
+    //Controls
+    private GameInput gameInput;
 
 
 
@@ -49,6 +58,12 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         Gdx.app.log(TAG, "MainGame Constructor");
         this.game = game;
         this.batch = batch;
+
+        camera = new OrthographicCamera();
+        gameViewport = new FitViewport(Figures.VIRTUALWIDTH,Figures.VIRTUALHEIGHT,camera);
+        camera.position.set(gameViewport.getWorldWidth()/2,gameViewport.getWorldHeight()/2,0);
+
+        gameInput = new GameInput(gameViewport);
 
 
         /*gravitationalForces = new Vector2(0,-9.8f);
@@ -65,58 +80,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
     }
 
-    public Body createBody(Vector2 position, float size, float force,
-                           BodyDef.BodyType type, int bodyType, short self, short interaction){
-        Body body;
-        BodyDef bdef = new BodyDef();
-        FixtureDef fdef = new FixtureDef();
 
-
-        switch(type) {
-            case StaticBody:
-                bdef.type = BodyDef.BodyType.StaticBody;
-                break;
-            case DynamicBody:
-                bdef.type = BodyDef.BodyType.DynamicBody;
-                break;
-            case KinematicBody:
-                bdef.type = BodyDef.BodyType.KinematicBody;
-                break;
-
-        }
-
-        bdef.position.set(position.x,position.y);
-        bdef.gravityScale = force;
-        body = world.createBody(bdef);
-        Shape shape;
-        switch(bodyType){
-            case 0:
-                shape = new CircleShape();
-                shape.setRadius(size/2);
-                break;
-            case 1:
-                shape = new PolygonShape();
-                ((PolygonShape)shape).setAsBox(size/2,size/2);
-                break;
-            default:
-                shape = new CircleShape();
-                shape.setRadius(size/2);
-        }
-
-
-
-        fdef.shape = shape;
-        fdef.density = 1f;
-        fdef.restitution = .5f;
-        fdef.isSensor = false;
-        fdef.filter.categoryBits = self;
-        fdef.filter.maskBits = interaction;
-        body.createFixture(fdef);
-
-        shape.dispose();
-
-        return body;
-    }
 
 
 
@@ -160,10 +124,10 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     @Override
     public void render(float delta) {
         movePlayer();
-        /*camera.update();
+        camera.update();
 
-        world.step(delta,6,2);
-*/
+      //  world.step(delta,6,2);
+
 
         Gdx.app.log(TAG, "MainGame Render");
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -176,6 +140,8 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     @Override
     public void resize(int width, int height) {
         Gdx.app.log(TAG, "MainGame resize");
+
+        gameViewport.update(width, height);
 
 
     }
