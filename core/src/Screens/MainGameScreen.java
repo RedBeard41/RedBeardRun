@@ -50,13 +50,14 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         this.game = game;
         this.batch = batch;
 
-        gravitationalForces = new Vector2(0,-9.8f);
+
+        /*gravitationalForces = new Vector2(0,-9.8f);
 
         world = new World(gravitationalForces,true);
         b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
         camera.setToOrtho(false,16, 10);
-        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);*/
 
 
 
@@ -127,7 +128,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
 
 
-        for(int i = 3; i<6; i++) {
+      /*  for(int i = 3; i<6; i++) {
             random = MathUtils.random(1,5);
             body = createBody(new Vector2(i, camera.viewportHeight+10),
                     random, 1, BodyDef.BodyType.DynamicBody, 0, ENEMY, (short)(PLAYER));
@@ -137,7 +138,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
                 random, 1, BodyDef.BodyType.DynamicBody, 0, PLAYER, (short)(GROUND|ENEMY));
 
         body2 = createBody(new Vector2(camera.viewportWidth/2,-camera.viewportHeight/2+1),camera.viewportWidth,
-                0, BodyDef.BodyType.StaticBody, 1,GROUND, PLAYER);
+                0, BodyDef.BodyType.StaticBody, 1,GROUND, PLAYER);*/
     }
 
     public void movePlayer(){
@@ -159,16 +160,16 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     @Override
     public void render(float delta) {
         movePlayer();
-        camera.update();
+        /*camera.update();
 
         world.step(delta,6,2);
-
+*/
 
         Gdx.app.log(TAG, "MainGame Render");
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        b2dr.render(world,camera.combined);
+       // b2dr.render(world,camera.combined);
 
     }
 
