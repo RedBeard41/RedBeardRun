@@ -25,6 +25,9 @@ import java.util.Random;
 
 import Helpers.Figures;
 import Helpers.GameInput;
+import Systems.PhysicsDebugSystem;
+import Systems.PhysicsSystem;
+import Systems.PlayerControlSystem;
 
 public class MainGameScreen implements Screen {
 public static final String TAG = MainGameScreen.class.getSimpleName();
@@ -36,7 +39,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     private World world;
     private Body body;
     private Body body2;
-    private Vector2 gravitationalForces;
+    
     private float random;
 
 
@@ -44,13 +47,16 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     //view
     private OrthographicCamera camera;
     private Viewport gameViewport;
-    private Box2DDebugRenderer b2dr;
+
 
     //Controls
     private GameInput gameInput;
 
     //Ashley
     private PooledEngine engine;
+    private PhysicsSystem physicsSystem;
+    private PhysicsDebugSystem physicsDebugSystem;
+    private PlayerControlSystem playerControlSystem;
 
 
 
@@ -69,15 +75,33 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
         engine = new PooledEngine(100, 500, 300,
                 1000);
+        world = new World(Figures.GRAVITATIONAL_FORCES,true);
 
+        initAshleySystems();
 
         /*gravitationalForces = new Vector2(0,-9.8f);
 
-        world = new World(gravitationalForces,true);
+
         b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
         camera.setToOrtho(false,16, 10);
         camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);*/
+
+
+
+
+
+    }
+
+    public void initAshleySystems(){
+        physicsSystem = new PhysicsSystem(world);
+        physicsDebugSystem = new PhysicsDebugSystem(world, camera);
+        playerControlSystem = new PlayerControlSystem(gameInput);
+
+        engine.addSystem(physicsSystem);
+        engine.addSystem(physicsDebugSystem);
+        engine.addSystem(playerControlSystem);
+
 
 
 
@@ -110,35 +134,22 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
                 0, BodyDef.BodyType.StaticBody, 1,GROUND, PLAYER);*/
     }
 
-    public void movePlayer(){
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            body.setLinearVelocity(-1f,0f);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            body.setLinearVelocity(1f,0f);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            body.applyLinearImpulse(0f,5f,body.getPosition().x,body.getPosition().y,true);
-            body.setAngularVelocity(0f);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            body.setLinearVelocity(0f,0f);
-        }
-    }
+
 
     @Override
     public void render(float delta) {
-        movePlayer();
-        camera.update();
+        //camera.update();
 
-      //  world.step(delta,6,2);
+
 
 
         Gdx.app.log(TAG, "MainGame Render");
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-       // b2dr.render(world,camera.combined);
+        engine.update(delta);
+
+
 
     }
 
@@ -170,7 +181,6 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     @Override
     public void dispose() {
         Gdx.app.log(TAG, "MainGame dispose");
-        b2dr.dispose();
         world.dispose();
 
 
