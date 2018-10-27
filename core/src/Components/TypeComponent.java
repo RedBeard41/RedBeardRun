@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Pool;
 
 import Helpers.Figures;
 
-public class TypeComponent implements Component, Pool.Poolable
+public class TypeComponent implements Component, Pool.Poolable{
 
 
 
