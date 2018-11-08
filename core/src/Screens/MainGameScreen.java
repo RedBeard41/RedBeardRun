@@ -27,6 +27,7 @@ import java.util.Random;
 import Components.BodyComponent;
 import Helpers.Figures;
 import Helpers.GameInput;
+import Helpers.LevelCollisionGenerator;
 import Managers.CollisionManager;
 import Managers.EntityManager;
 import Systems.PhysicsDebugSystem;
@@ -67,6 +68,14 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     private EntityManager entityManager;
     private Entity player;
 
+    //level generator
+    private LevelCollisionGenerator levelCollisionGenerator;
+    private Entity ground;
+
+    //temp variables for optimization
+    private Vector2 tempPosition;
+    private Vector2 tempDimensions;
+
 
 
 
@@ -75,6 +84,9 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         Gdx.app.log(TAG, "MainGame Constructor");
         this.game = game;
         this.batch = batch;
+
+        tempDimensions = new Vector2(Vector2.Zero);
+        tempPosition = new Vector2(Vector2.Zero);
 
         camera = new OrthographicCamera();
         gameViewport = new FitViewport(Figures.VIRTUALWIDTH,Figures.VIRTUALHEIGHT,camera);
@@ -91,6 +103,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
         initAshleySystems();
         entityManager = new EntityManager(game, world, this.batch, engine);
+        levelCollisionGenerator = new LevelCollisionGenerator(world, engine);
 
         /*gravitationalForces = new Vector2(0,-9.8f);
 
@@ -134,6 +147,17 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         Gdx.input.setInputProcessor(gameInput);
 
         player = entityManager.spawnEntity("Player",8,5);
+
+        //temp test of level generation
+        tempPosition.x = 0;
+        tempPosition.y = 1;
+        tempDimensions.x = gameViewport.getWorldWidth();
+        tempDimensions.y = 1;
+
+
+        ground = levelCollisionGenerator.createCollisionLevel(tempPosition,tempDimensions,
+                BodyDef.BodyType.StaticBody,1);
+
 
       /*  for(int i = 3; i<6; i++) {
             random = MathUtils.random(1,5);
