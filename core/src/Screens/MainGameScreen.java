@@ -1,5 +1,6 @@
 package Screens;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,8 +24,10 @@ import com.redbeard.RedBeardRun;
 
 import java.util.Random;
 
+import Components.BodyComponent;
 import Helpers.Figures;
 import Helpers.GameInput;
+import Managers.EntityManager;
 import Systems.PhysicsDebugSystem;
 import Systems.PhysicsSystem;
 import Systems.PlayerControlSystem;
@@ -58,6 +61,10 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     private PhysicsDebugSystem physicsDebugSystem;
     private PlayerControlSystem playerControlSystem;
 
+    //Entity Manager
+    private EntityManager entityManager;
+    private Entity player;
+
 
 
 
@@ -78,6 +85,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         world = new World(Figures.GRAVITATIONAL_FORCES,true);
 
         initAshleySystems();
+        entityManager = new EntityManager(game, world, this.batch, engine);
 
         /*gravitationalForces = new Vector2(0,-9.8f);
 
@@ -118,8 +126,9 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     @Override
     public void show() {
         Gdx.app.log(TAG, "MainGame Show");
+        Gdx.input.setInputProcessor(gameInput);
 
-
+        player = entityManager.spawnEntity("Player",8,5);
 
       /*  for(int i = 3; i<6; i++) {
             random = MathUtils.random(1,5);
