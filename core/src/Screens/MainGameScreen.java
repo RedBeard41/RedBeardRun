@@ -27,6 +27,7 @@ import java.util.Random;
 import Components.BodyComponent;
 import Helpers.Figures;
 import Helpers.GameInput;
+import Managers.CollisionManager;
 import Managers.EntityManager;
 import Systems.PhysicsDebugSystem;
 import Systems.PhysicsSystem;
@@ -42,6 +43,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     private World world;
     private Body body;
     private Body body2;
+    private CollisionManager collisionManager;
     
     private float random;
 
@@ -83,6 +85,9 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         engine = new PooledEngine(100, 500, 300,
                 1000);
         world = new World(Figures.GRAVITATIONAL_FORCES,true);
+        collisionManager = new CollisionManager();
+        world.setContactListener(collisionManager);
+
 
         initAshleySystems();
         entityManager = new EntityManager(game, world, this.batch, engine);
