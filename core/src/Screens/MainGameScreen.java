@@ -8,6 +8,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -71,6 +75,8 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
     //level generator
     private LevelCollisionGenerator levelCollisionGenerator;
     private Entity ground;
+    private OrthogonalTiledMapRenderer mapRenderer;
+    private TiledMap map;
 
     //temp variables for optimization
     private Vector2 tempPosition;
@@ -104,6 +110,12 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         initAshleySystems();
         entityManager = new EntityManager(game, world, this.batch, engine);
         levelCollisionGenerator = new LevelCollisionGenerator(world, engine);
+
+        //todo need to change how map is loaded when implementing asset management
+        map = new TmxMapLoader().load("TestMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, this.batch);
+
+        levelCollisionGenerator.createCollisionLevel(map);
 
         /*gravitationalForces = new Vector2(0,-9.8f);
 
@@ -155,8 +167,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         tempDimensions.y = 1;
 
 
-        ground = levelCollisionGenerator.createCollisionLevel(tempPosition,tempDimensions,
-                BodyDef.BodyType.StaticBody,1);
+
 
 
       /*  for(int i = 3; i<6; i++) {
@@ -185,6 +196,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        mapRenderer.render();
         engine.update(delta);
 
 
