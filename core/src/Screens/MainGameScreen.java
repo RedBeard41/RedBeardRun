@@ -113,7 +113,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
         //todo need to change how map is loaded when implementing asset management
         map = new TmxMapLoader().load("TestMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, this.batch);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1/Figures.PPM,this.batch);
 
         levelCollisionGenerator.createCollisionLevel(map);
 
@@ -187,7 +187,8 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
 
     @Override
     public void render(float delta) {
-        //camera.update();
+        camera.position.set(player.getComponent(BodyComponent.class).getBody().getPosition(),0);
+        camera.update();
 
 
 
@@ -196,6 +197,7 @@ public static final String TAG = MainGameScreen.class.getSimpleName();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        mapRenderer.setView((OrthographicCamera)gameViewport.getCamera());
         mapRenderer.render();
         engine.update(delta);
 

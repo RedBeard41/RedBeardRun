@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="27">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="35">
  <tileset firstgid="1" source="TestTileSet.tsx"/>
  <layer id="1" name="Ground_Layer" width="40" height="40">
   <data encoding="csv">
@@ -95,26 +95,11 @@
     <property name="Spawn" value="Player"/>
    </properties>
   </object>
-  <object id="18" x="385.25" y="488.25">
-   <ellipse/>
-  </object>
-  <object id="19" x="475.5" y="488.5" width="90.5" height="97.75">
-   <ellipse/>
-  </object>
-  <object id="20" x="306" y="547.5" width="62.5" height="63">
-   <ellipse/>
-  </object>
  </objectgroup>
  <objectgroup id="4" name="COLLISION_LAYER">
   <properties>
    <property name="Type" value="BodyDef.BodyType.StaticBody"/>
   </properties>
-  <object id="1" x="15.7462" y="8.0009">
-   <properties>
-    <property name="Type" value="StaticBody"/>
-   </properties>
-   <polygon points="0,0 -8.49655,8.00962 -9.24624,615.489 -0.999594,622.998 605.754,623.749 606.254,-0.750902"/>
-  </object>
   <object id="5" x="352.25" y="48.25" width="16" height="16">
    <properties>
     <property name="Type" value="StaticBody"/>
@@ -145,7 +130,7 @@
     <property name="Type" value="StaticBody"/>
    </properties>
   </object>
-  <object id="11" x="48.75" y="287.5" width="16" height="16">
+  <object id="11" x="47.75" y="288.5" width="16" height="16">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
@@ -165,36 +150,41 @@
     <property name="Type" value="StaticBody"/>
    </properties>
   </object>
-  <object id="21" x="383" y="256" width="177.75" height="16">
+  <object id="20" x="282.75" y="515.75" width="103.018" height="103.02">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
+   <ellipse/>
   </object>
-  <object id="22" x="543.75" y="272" width="16" height="128.25">
+  <object id="28" x="399.75" y="271.5">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
+   <polyline points="0.25,0.5 144.25,0.5 144.25,128.25 80.25,128.5 80.25,144.5 160.25,144.5 160.25,-15.5 -15.75,-15.5 -15.75,144.5 48.25,144.5 48.25,128.5 0.25,128.5 0.25,0.5"/>
   </object>
-  <object id="23" x="384.5" y="271.125" width="16" height="128.25">
+  <object id="29" x="371" y="458.5" width="35.25" height="35.25">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
+   <ellipse/>
   </object>
-  <object id="24" x="448.369" y="400.519" width="16" height="64.5176" rotation="90.8747">
+  <object id="33" x="16.75" y="7.25">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
+   <polyline points="0,0 606.5,0.75 607.25,622.75 -0.5,624.25 -8.5,617 -8.25,8.5 -0.25,0"/>
   </object>
-  <object id="25" x="559.25" y="399.991" width="16" height="79.0426" rotation="90.8747">
+  <object id="34" x="304" y="176">
    <properties>
     <property name="Type" value="StaticBody"/>
    </properties>
+   <polyline points="0,0 0,80 -16,80 -16,112 -32,112 -32,128 -112,128 -112,112 -176,112 -176,-32 -160,-32 -160,-48 -48,-48 -48,-16 -16,-16 -16,0 0,0"/>
   </object>
-  <object id="26" x="256.25" y="128">
+  <object id="31" x="156.5" y="465.25" width="57.25" height="57.25">
    <properties>
-    <property name="Type" value="Static"/>
+    <property name="Type" value="StaticBody"/>
    </properties>
-   <polygon points="0,0 0,173.75 -129.5,176 -128,1 -33,0.75 -32.75,13.25 -15.5,15 -16.75,-2"/>
+   <ellipse/>
   </object>
  </objectgroup>
 </map>
